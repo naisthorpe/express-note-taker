@@ -17,7 +17,7 @@ app.use(express.static("db"));
 app.get("/notes", (req, res) => res.sendFile(path.join(__dirname, "/public/notes.html")));
 
 // Set up notes API route
-app.get("/api/notes", (req, res) => res.json(notesArray));
+app.get("/api/notes", (req, res) => res.sendFile(path.join(__dirname, "/db/db.json")));
 
 // Set up POST
 app.post("/api/notes", (req, res) => {
@@ -25,13 +25,20 @@ app.post("/api/notes", (req, res) => {
     const newNote = req.body;
     
     // Read the db.json file via JSON.parse
-    let notesArray = JSON.parse(fs.readFile("./db/db.json", "utf8"));
-    notesArray.push(newNote);
-    console.log(notesArray);
+    // https://stackabuse.com/reading-and-writing-json-files-with-node-js/
+    let notesArray = JSON.parse(fs.readFileSync("./db/db.json", newNote));
 
-    // Push new note object to array into parsed db.json file
+    // Push new note to notes array
+    notesArray.push(newNote);    
 
     // Overwrite db.json file with fs write and json.stringify
+    JSON.stringify(notesArray, "utf-8", (err) => {
+        if (err) throw err;
+        console.log("data written to file");
+    });
+
+    res.json(notesArray);
+
     
 });
 
