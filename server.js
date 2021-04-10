@@ -35,7 +35,9 @@ app.post("/api/notes", (req, res) => {
     notesArray.push(newNote);    
 
     // Overwrite db.json file with fs write and json.stringify
-    fs.writeFile("./db/db.json", JSON.stringify(notesArray), (err) => {
+    // To clean up the json file: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify
+    // Make the space argument 4 so it tabs properly
+    fs.writeFile("./db/db.json", JSON.stringify(notesArray, null, 4), (err) => {
         if (err) throw err;
     });
 
