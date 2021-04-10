@@ -52,14 +52,19 @@ app.post("/api/notes", (req, res) => {
 });
 
 // Add delete functionality here
+// https://www.geeksforgeeks.org/express-js-app-delete-function/
 app.delete("/api/notes/:id", (req, res) => {
     // This is like the params from Unit 11 Activity 14
-    const chosen = req.params.id;
+    const chosen = parseInt(req.params.id);
     // parse the db.json file
     let notesArray = JSON.parse(fs.readFileSync("./db/db.json", "utf-8"));
-    // now choose from the array by id
-    let newArray = notesArray.filter( (note) => {
-        note.id !== chosen;
+    // now filter the array and exclude the chosen id
+    // https://stackoverflow.com/questions/14400609/remove-json-entry-by-value/14400705
+    let newArray = notesArray.filter((note) => {
+        console.log(note);
+        console.log(note.id);
+        console.log(chosen);
+        return note.id !== chosen;
     });
     // stringify the new array without the deleted id
     fs.writeFile("./db/db.json", JSON.stringify(newArray, null, 4), (err) => {
@@ -67,6 +72,7 @@ app.delete("/api/notes/:id", (req, res) => {
     });
     // now console log note was deleted
     console.log(`Note id ${chosen} deleted`);
+    console.log(newArray);
     res.json(newArray);
 });
 
