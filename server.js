@@ -2,7 +2,6 @@
 const express = require("express");
 const path = require("path");
 const fs = require("fs");
-const notesArray = require("./db/db");
 
 // Set up the express app
 const app = express();
@@ -22,10 +21,18 @@ app.get("/api/notes", (req, res) => res.json(notesArray));
 
 // Set up POST
 app.post("/api/notes", (req, res) => {
+    // Set newNote as request body
     const newNote = req.body;
-
-    // Push new note object to array in db.json file
+    
+    // Read the db.json file via JSON.parse
+    let notesArray = JSON.parse(fs.readFile("./db/db.json", "utf8"));
     notesArray.push(newNote);
+    console.log(notesArray);
+
+    // Push new note object to array into parsed db.json file
+
+    // Overwrite db.json file with fs write and json.stringify
+    
 });
 
 // route for wildcard root
