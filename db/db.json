@@ -1,37 +1,7 @@
 [
     {
-        "title": "Test Title",
-        "text": "Test text",
-        "id": 1
-    },
-    {
-        "title": "nick",
-        "text": "is cool",
-        "id": 2
-    },
-    {
-        "title": "cool",
-        "text": "alright, kick it\n",
-        "id": 3
-    },
-    {
         "title": "testing",
         "text": "123",
-        "id": 4
-    },
-    {
-        "title": "another",
-        "text": "test",
-        "id": 5
-    },
-    {
-        "title": "one more time",
-        "text": "for safety",
-        "id": 6
-    },
-    {
-        "title": "this should have an id",
-        "text": "i hope",
-        "id": 7
+        "id": 1
     }
 ]

@@ -29,7 +29,7 @@ app.post("/api/notes", (req, res) => {
     
     // Read the db.json file and parse it
     // https://stackabuse.com/reading-and-writing-json-files-with-node-js/
-    let notesArray = JSON.parse(fs.readFileSync("./db/db.json"));
+    let notesArray = JSON.parse(fs.readFileSync("./db/db.json", "utf-8"));
 
     // Push new note to notes array
     notesArray.push(newNote);
@@ -49,6 +49,25 @@ app.post("/api/notes", (req, res) => {
 
     console.log("Note saved");
     res.json(notesArray);
+});
+
+// Add delete functionality here
+app.delete("/api/notes/:id", (req, res) => {
+    // This is like the params from Unit 11 Activity 14
+    const chosen = req.params.id;
+    // parse the db.json file
+    let notesArray = JSON.parse(fs.readFileSync("./db/db.json", "utf-8"));
+    // now choose from the array by id
+    let newArray = notesArray.filter( (note) => {
+        note.id !== chosen;
+    });
+    // stringify the new array without the deleted id
+    fs.writeFile("./db/db.json", JSON.stringify(newArray, null, 4), (err) => {
+        if (err) throw err;
+    });
+    // now console log note was deleted
+    console.log(`Note id ${chosen} deleted`);
+    res.json(newArray);
 });
 
 app.get("*", (req, res) => res.sendFile(path.join(__dirname, "/public/index.html")))
