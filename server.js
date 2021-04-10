@@ -2,6 +2,7 @@
 const express = require("express");
 const path = require("path");
 const fs = require("fs");
+const { v4: uuidv4 } = require('uuid');
 
 // Set up the express app
 const app = express();
@@ -25,20 +26,17 @@ app.get("/api/notes", (req, res) => res.sendFile(path.join(__dirname, "/db/db.js
 // Set up POST
 app.post("/api/notes", (req, res) => {
     // Set newNote as request body
-    const newNote = req.body;
+    let newNote = req.body;
+    // Add new id to new note
+    // https://www.npmjs.com/package/uuid
+    newNote.id = uuidv4();
     
     // Read the db.json file and parse it
     // https://stackabuse.com/reading-and-writing-json-files-with-node-js/
     let notesArray = JSON.parse(fs.readFileSync("./db/db.json", "utf-8"));
 
     // Push new note to notes array
-    notesArray.push(newNote);
-    
-    // Give each note a unique id based on the index
-    // https://stackoverflow.com/questions/62926005/add-an-incrementing-id-property-to-each-object-in-array-after-it-has-been-submit
-    notesArray.forEach((note, index) => {
-        note.id = index + 1;
-    });   
+    notesArray.push(newNote); 
 
     // Overwrite db.json file with fs write and json.stringify
     // To clean up the json file: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify
