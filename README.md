@@ -32,10 +32,16 @@
 
   ## Deployed Site Link
 
+https://appfortakingnotes.herokuapp.com/
   ## Questions
 
   If you have any questions about the repo, open an issue or contact me directly at [aisthorpe@gmail.com](mailto:aisthorpe@gmail.com). You can find more of my work at [naisthorpe](https://www.github.com/naisthorpe).
 
   ## Site Screenshots
 
-  
+  ### Main Page
+  ![Main Page Screenshot](./public/assets/images/mainpage.png)
+
+  ### Notes Page
+  ![Notes Page Screenshot](./public/assets/images/notespage.png)
+
