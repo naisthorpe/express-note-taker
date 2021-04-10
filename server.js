@@ -32,7 +32,13 @@ app.post("/api/notes", (req, res) => {
     let notesArray = JSON.parse(fs.readFileSync("./db/db.json"));
 
     // Push new note to notes array
-    notesArray.push(newNote);    
+    notesArray.push(newNote);
+    
+    // Give each note a unique id based on the index
+    // https://stackoverflow.com/questions/62926005/add-an-incrementing-id-property-to-each-object-in-array-after-it-has-been-submit
+    notesArray.forEach((note, index) => {
+        note.id = index + 1;
+    });   
 
     // Overwrite db.json file with fs write and json.stringify
     // To clean up the json file: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify
@@ -43,8 +49,6 @@ app.post("/api/notes", (req, res) => {
 
     console.log("Note saved");
     res.json(notesArray);
-
-    
 });
 
 app.get("*", (req, res) => res.sendFile(path.join(__dirname, "/public/index.html")))
